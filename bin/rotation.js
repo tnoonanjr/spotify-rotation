@@ -1,6 +1,6 @@
-import { getUserProfile, getUserPlaylists, postUserPlaylist, addToUserPlaylist, getUserTopTracks } from "./spotify.js";
-import { startServer } from "./server.js";
-import { parseArguments } from "./cli.js";
+import { getUserProfile, getUserPlaylists, postUserPlaylist, addToUserPlaylist, getUserTopTracks } from "../src/spotify.js";
+import { startServer } from "../src/auth/server.js";
+import { parseArguments } from "../src/cli.js";
 
 const args = process.argv.slice(2);
 const options = parseArguments(args);
