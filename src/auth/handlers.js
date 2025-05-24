@@ -26,9 +26,7 @@ export async function callbackHandler(requestUrl, response, codeVerifiers,
         response.end(`
         <html>
             <head><title>Spotify Authentication Successful</title></head>
-            <script>
-                setTimeout(() => { window.close(); }, 1000);
-            </script> 
+            <script> setTimeout(() => { window.close(); }, 1000); </script> 
         </html>
         `);
 
