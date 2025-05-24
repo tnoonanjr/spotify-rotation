@@ -1,0 +1,21 @@
+{
+  "name": "spotify-rotation",
+  "version": "1.0.0",
+  "description": "A CLI tool to create and update a Spotify playlist of your favorite songs.",
+  "type": "module",
+  "main": "rotation.js",
+  "scripts": {
+    "start": "node rotation.js"
+  },
+  "keywords": [
+    "spotify",
+    "playlist",
+    "cli",
+    "script"
+  ],
+  "author": "Thomas Noonan",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
