@@ -25,7 +25,6 @@ export function getAuthUrl(codeChallenge, state, redirectUri) {
     return authUrl.toString();
 }
 
-// Exchange authorization code for access token
 export async function exchangeCodeForToken(code, codeVerifier, redirectUri) {
     const body = new URLSearchParams({
         client_id: CLIENT_ID,
