@@ -1,4 +1,5 @@
-import { getUserProfile, getUserPlaylists, postUserPlaylist, addToUserPlaylist, getUserTopTracks } from "../src/spotify.js";
+import { getUserProfile, getUserPlaylists, postUserPlaylist, 
+         addToUserPlaylist, getUserTopTracks, replacePlaylistItems } from "../src/spotify.js";
 import { startServer } from "../src/auth/server.js";
 import { parseArguments } from "../src/cli.js";
 
@@ -48,5 +49,9 @@ console.log('Adding tracks:', userTopTracks.items.map(track => track.name).join(
 
 // Add tracks to the playlist
 const trackUris = userTopTracks.items.map(track => track.uri);
-await addToUserPlaylist(accessToken, playlistId, trackUris);
+if (options.isUsingExisting) {
+    await replacePlaylistItems(accessToken, playlistId, trackUris);
+} else {
+    await addToUserPlaylist(accessToken, playlistId, trackUris);
+}
 console.log('🚀 Script run successfully!');

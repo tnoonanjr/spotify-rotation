@@ -38,6 +38,18 @@ export async function addToUserPlaylist(accessToken, playlistId, trackUris) {
     return await response.json();
 }
 
+export async function replacePlaylistItems(accessToken, playlistId, trackUris) {
+    const response = await fetch(`${SPOTIFY_API_BASE}/playlists/${playlistId}/tracks`, {
+        method: 'PUT',  // PUT replaces all items
+        headers: { 
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ uris: trackUris })
+    });
+    return await response.json();
+}
+
 export async function getUserTopTracks(accessToken, timeRange, limit) {
     const params = [];
     if (timeRange) params.push(`time_range=${timeRange}`);
