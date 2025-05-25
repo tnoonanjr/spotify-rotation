@@ -1,6 +1,8 @@
+import { exchangeCodeForToken, generateCodeVerifier, generateCodeChallenge, getAuthUrl } from './auth.js';
+
 export async function rootHandler(response, codeVerifiers, REDIRECT_URI,
                                   authHelpers) {
-    const { generateCodeVerifier, generateCodeChallenge, getAuthUrl } = authHelpers;
+    
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = generateCodeChallenge(codeVerifier);
 
@@ -13,8 +15,8 @@ export async function rootHandler(response, codeVerifiers, REDIRECT_URI,
 }
 
 export async function callbackHandler(requestUrl, response, codeVerifiers, 
-                                      REDIRECT_URI, authHelpers, onAuthComplete) {
-    const { exchangeCodeForToken } = authHelpers;
+                                      REDIRECT_URI, authHelpers, tokenDataCallback) {
+   
     const code = requestUrl.searchParams.get('code');
     const state = requestUrl.searchParams.get('state');
     const codeVerifier = codeVerifiers[state];
@@ -33,7 +35,7 @@ export async function callbackHandler(requestUrl, response, codeVerifiers,
         delete codeVerifiers[state];
         
         // Callback with tokenData
-        if (onAuthComplete) onAuthComplete(tokenData); 
+        if (tokenDataCallback) tokenDataCallback(tokenData); 
     } else {
         const error = requestUrl.searchParams.get('error');
         response.writeHead(400);
