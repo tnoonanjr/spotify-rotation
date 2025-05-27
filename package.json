@@ -5,7 +5,7 @@
   "type": "module",
   "main": "rotation.js",
   "scripts": {
-    "start": "node rotation.js"
+    "start": "node bin/rotation.js"
   },
   "keywords": [
     "spotify",
