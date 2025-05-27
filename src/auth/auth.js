@@ -1,7 +1,7 @@
 import { URL } from 'url';
 import { randomBytes, createHash } from 'crypto';
 
-const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || 'your-client-id';
+const CLIENT_ID = process.env.CLIENT_ID || 'your-client-id';
 const scope = `user-read-private user-read-email playlist-read-private playlist-modify-public 
                playlist-modify-private user-top-read`;
 
