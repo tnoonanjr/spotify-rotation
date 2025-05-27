@@ -1,7 +1,6 @@
 import { exchangeCodeForToken, generateCodeVerifier, generateCodeChallenge, getAuthUrl } from './auth.js';
 
-export async function rootHandler(response, codeVerifiers, REDIRECT_URI,
-                                  authHelpers) {
+export async function rootHandler(response, codeVerifiers, REDIRECT_URI) {
     
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = generateCodeChallenge(codeVerifier);
@@ -15,7 +14,7 @@ export async function rootHandler(response, codeVerifiers, REDIRECT_URI,
 }
 
 export async function callbackHandler(requestUrl, response, codeVerifiers, 
-                                      REDIRECT_URI, authHelpers, tokenDataCallback) {
+                                      REDIRECT_URI, tokenDataCallback) {
    
     const code = requestUrl.searchParams.get('code');
     const state = requestUrl.searchParams.get('state');

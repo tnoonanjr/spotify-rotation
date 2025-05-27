@@ -1,7 +1,6 @@
 import http from 'http';
 import { URL } from 'url';
 import { exec } from 'child_process';
-import * as authHelpers from './auth.js';
 import { rootHandler, callbackHandler } from './handlers.js';
 
 const PORT = 4242;
@@ -16,14 +15,11 @@ export function startServer() {
 
             switch (pathname) {
                 case '/':
-                    await rootHandler(response, codeVerifiers, REDIRECT_URI, 
-                                      authHelpers);
+                    await rootHandler(response, codeVerifiers, REDIRECT_URI);
                     break;
                 case '/callback':
-                    await callbackHandler(
-                        requestUrl, response, codeVerifiers,
-                        REDIRECT_URI, authHelpers,
-                        (tokenData) => { server.close(); resolve(tokenData); } );
+                    await callbackHandler(requestUrl, response, codeVerifiers,
+                                          REDIRECT_URI, (tokenData) => { server.close(); resolve(tokenData); } );
                     break;
                 default:
                     response.writeHead(404);
