@@ -2,6 +2,7 @@ import { getUserProfile, getUserPlaylists, postUserPlaylist,
          addToUserPlaylist, getUserTopTracks, replacePlaylistItems } from "../src/spotify.js";
 import { startServer } from "../src/auth/server.js";
 import { parseArguments } from "../src/cli.js";
+import fs from 'fs';
 
 const args = process.argv.slice(2);
 const options = parseArguments(args);
@@ -11,12 +12,29 @@ console.log('Time range:', options.timeRange);
 console.log('Limit:', options.limit);
 console.log('Playlist description:', options.playlistDescription);
 
-const tokenData = await startServer();
+let accessToken, tokenData;
+if (fs.existsSync('.spotify_token.json')) {
+    try {
+        const tokenJson = fs.readFileSync('.spotify_token.json', 'utf-8');
+        const cachedTokenData = JSON.parse(tokenJson);
+
+        console.log('Using cached token data...');
+        tokenData = cachedTokenData;
+        accessToken = tokenData.access_token
+    } catch (error) {
+        console.error('An error occurred reading cached token data:', error);
+        process.exit(1);
+    }
+} else {
+    console.log('Starting authentication server...');
+    tokenData = await startServer();
+    accessToken = tokenData.access_token;
+}
 if (!tokenData)  {
     console.error('An error occured retrieving token data.');
     process.exit(1);
 }
-const accessToken = tokenData.access_token;
+
 console.log('\n✅ Authentication successful!');
 
 // Get user profile
