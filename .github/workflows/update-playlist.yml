@@ -1,0 +1,23 @@
+name: Run Spotify Rotation
+
+on:
+  workflow_dispatch:      # Allow manual triggering
+  schedule:
+    - cron: '0 0 * * 5'   # Weekly at midnight on Friday
+
+jobs:
+  create-playlist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Run script
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+        run: |
+          npm start -- -u "30 / 30" -l 30 -t short
