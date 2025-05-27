@@ -11,7 +11,7 @@ if (!refreshToken) {
 try {
   const tokenData = await refreshAccessToken(refreshToken);
   
-  fs.writeFileSync('.spotify_token.json', JSON.stringify(tokenData, null, 2));
+  fs.writeFileSync('/.spotify_token.json', JSON.stringify(tokenData, null, 2));
   
   console.log('✅ Successfully refreshed access token');
 } catch (error) {
