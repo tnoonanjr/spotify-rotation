@@ -15,9 +15,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          
-      - name: Run script
+      
+      - name: Create token file for automation
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-        run: |
-          npm start -- -u "30 / 30" -l 30 -t short
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+        run: node .github/scripts/prepare-token.js
+          
+      - name: Run script
+        run: npm start -- -u "30 / 30" -l 30 -t short
