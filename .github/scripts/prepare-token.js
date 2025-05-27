@@ -17,5 +17,6 @@ try {
 } catch (error) {
   console.error('Error refreshing token:', error);
   console.log(refreshToken.length);
+  console.log('Contains line breaks:', refreshToken?.includes('\n'));
   process.exit(1);
 }
