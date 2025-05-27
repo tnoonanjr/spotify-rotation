@@ -14,22 +14,28 @@ A CLI tool to create and update a Spotify playlist of your favorite songs.
    - Copy your **Client ID**
 
 2. **Configuration**
-  - If you dont have Node.js already, install it (refrence Prerequisites above)
-  ### For local development:
-   - Clone the repositiory
-    - Replace the default Client ID with yours:
+   - If you don't have Node.js already, install it (reference Prerequisites above)
+   
+   ### For local development:
+   - Clone the repository
+   - Replace the default Client ID with yours:
      ```javascript
      // Find this line and replace 'your-client-id'
      const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || 'your-client-id';
      ```
-  ### For GitHub deployment:
-   - Fork this repository
-   - Go to your fork's Settings > Secrets and variables > Actions
-   - Create a new repository secret named `SPOTIFY_CLIENT_ID` with your Client ID
-   - Enable GitHub Actions in your repository
-   - The playlist will update automatically based on the schedule in the workflow file
-   - You can also manually trigger the workflow from the Actions tab
-
+   
+   ### For GitHub deployment:
+   1. Fork this repository
+   2. Go to your fork's Settings > Secrets and variables > Actions
+   3. Enable GitHub Actions in your repository
+   4. Get a refresh token by running the app locally once
+   5. Find the refresh token in the `.spotify_token.json` file that's created
+   6. Add two secrets to your GitHub repository:
+    - `SPOTIFY_CLIENT_ID`: Your Spotify application client ID
+    - `SPOTIFY_REFRESH_TOKEN`: The refresh token from the file
+   7. The workflow will:
+    - Use the refresh token to get a new access token
+    - Create/update your playlist on the scheduled time
 
 
 ## Usage:
@@ -50,7 +56,7 @@ npm start -- [options]
 Example:
 
 ```bash
-npm start -- -u "30 / 30" -l 30 -t short
+npm start -- -n "30 / 30" -l 30 -t short
 ```
 
 * Creates a playlist named 30 / 30 with your top 30 most played songs in the past four weeks
