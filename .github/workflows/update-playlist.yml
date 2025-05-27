@@ -18,8 +18,8 @@ jobs:
       
       - name: Create token file for automation
         env:
-          SPOTIFY_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          SPOTIFY_REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
         run: node .github/scripts/prepare-token.js
           
       - name: Run script

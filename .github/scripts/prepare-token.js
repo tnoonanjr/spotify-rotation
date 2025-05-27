@@ -2,7 +2,7 @@ import fs from 'fs';
 import { refreshAccessToken } from '../../src/auth/auth.js';
 
 // Get refresh token from GitHub secrets
-const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+const refreshToken = process.env.REFRESH_TOKEN;
 if (!refreshToken) {
   console.error('REFRESH_TOKEN environment variable not set');
   process.exit(1);
