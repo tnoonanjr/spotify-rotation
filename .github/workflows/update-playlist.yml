@@ -15,12 +15,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-      
-      - name: Create token file for automation
-        env:
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-        run: node .github/scripts/prepare-token.js
           
       - name: Run script
         run: npm start -- -u "30 / 30" -l 30 -t short
