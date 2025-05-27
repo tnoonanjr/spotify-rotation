@@ -16,5 +16,6 @@ try {
   console.log('✅ Successfully refreshed access token');
 } catch (error) {
   console.error('Error refreshing token:', error);
+  console.log(refreshToken.length);
   process.exit(1);
 }
