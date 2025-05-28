@@ -49,7 +49,7 @@ export async function exchangeCodeForToken(code, codeVerifier, redirectUri) {
 
 
 export async function refreshAccessToken(refreshToken) {
-    console.log('CLIENT_ID:', CLIENT_ID);
+    console.log('CLIENT_ID:', process.env.CLIENT_ID ? CLIENT_ID : 'Not set');
     const body = new URLSearchParams({
         client_id: CLIENT_ID,
         grant_type: 'refresh_token',
