@@ -1,7 +1,7 @@
 import { URL } from 'url';
 import { randomBytes, createHash } from 'crypto';
 
-const CLIENT_ID = process.env.CLIENT_ID || 'your-client-id';
+const CLIENT_ID = 'your-client-id';
 const scope = `user-read-private user-read-email playlist-read-private playlist-modify-public 
                playlist-modify-private user-top-read`;
 
@@ -27,7 +27,6 @@ export function getAuthUrl(codeChallenge, state, redirectUri) {
 
 export async function exchangeCodeForToken(code, codeVerifier, redirectUri) {
     const body = new URLSearchParams({
-        client_id: CLIENT_ID,
         grant_type: 'authorization_code',
         code,
         redirect_uri: redirectUri,
@@ -49,7 +48,6 @@ export async function exchangeCodeForToken(code, codeVerifier, redirectUri) {
 
 
 export async function refreshAccessToken(refreshToken) {
-    console.log('CLIENT_ID:', process.env.CLIENT_ID ? CLIENT_ID : 'Not set');
     const body = new URLSearchParams({
         client_id: CLIENT_ID,
         grant_type: 'refresh_token',
@@ -63,15 +61,6 @@ export async function refreshAccessToken(refreshToken) {
     });
 
     if (!response.ok) {
-        // Get more details from the error response
-        let errorDetails = '';
-        try {
-            const errorJson = await response.json();
-            errorDetails = JSON.stringify(errorJson);
-        } catch (e) {
-            errorDetails = await response.text();
-        }
-        
         throw new Error(`Failed to refresh access token: ${response.status} ${response.statusText} - ${errorDetails}`);
     }
     return await response.json();
