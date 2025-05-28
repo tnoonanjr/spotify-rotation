@@ -49,6 +49,7 @@ export async function exchangeCodeForToken(code, codeVerifier, redirectUri) {
 
 
 export async function refreshAccessToken(refreshToken) {
+    console.log('CLIENT_ID:', CLIENT_ID);
     const body = new URLSearchParams({
         client_id: CLIENT_ID,
         grant_type: 'refresh_token',
@@ -62,8 +63,16 @@ export async function refreshAccessToken(refreshToken) {
     });
 
     if (!response.ok) {
-        throw new Error(`Failed to refresh access token: ${response.statusText}`);
+        // Get more details from the error response
+        let errorDetails = '';
+        try {
+            const errorJson = await response.json();
+            errorDetails = JSON.stringify(errorJson);
+        } catch (e) {
+            errorDetails = await response.text();
+        }
+        
+        throw new Error(`Failed to refresh access token: ${response.status} ${response.statusText} - ${errorDetails}`);
     }
-    
     return await response.json();
 }
