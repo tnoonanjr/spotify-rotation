@@ -2,6 +2,7 @@ import { getUserProfile, getUserPlaylists, postUserPlaylist,
          addToUserPlaylist, getUserTopTracks, replacePlaylistItems } from "../src/spotify.js";
 import { startServer } from "../src/auth/server.js";
 import { parseArguments } from "../src/cli.js";
+import { refreshAccessToken } from "../src/auth/auth.js";
 import fs from 'fs';
 
 const args = process.argv.slice(2);
@@ -13,7 +14,16 @@ console.log('Limit:', options.limit);
 console.log('Playlist description:', options.playlistDescription);
 
 let accessToken, tokenData;
-if (fs.existsSync('.spotify_token.json')) {
+if (process.env.GITHUB_ACTIONS) {
+    try {
+        console.log('Running in GitHub Actions environment...');
+        tokenData = await refreshAccessToken(process.env.REFRESH_TOKEN)
+        accessToken = tokenData.access_token;
+    } catch (error) {
+        console.error('An error occurred while refreshing the access token:', error);
+        process.exit(1);
+    }
+} else if (fs.existsSync('.spotify_token.json')) {
     try {
         const tokenJson = fs.readFileSync('.spotify_token.json', 'utf-8');
         const cachedTokenData = JSON.parse(tokenJson);
