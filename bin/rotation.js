@@ -14,16 +14,7 @@ console.log('Limit:', options.limit);
 console.log('Playlist description:', options.playlistDescription);
 
 let accessToken, tokenData;
-if (process.env.GITHUB_ACTIONS) {
-    try {
-        console.log('Running in GitHub Actions environment...');
-        tokenData = await refreshAccessToken(process.env.REFRESH_TOKEN)
-        accessToken = tokenData.access_token;
-    } catch (error) {
-        console.error('An error occurred while refreshing the access token:', error);
-        process.exit(1);
-    }
-} else if (fs.existsSync('.spotify_token.json')) {
+if (fs.existsSync('.spotify_token.json')) {
     try {
         const tokenJson = fs.readFileSync('.spotify_token.json', 'utf-8');
         const cachedTokenData = JSON.parse(tokenJson);
@@ -36,6 +27,17 @@ if (process.env.GITHUB_ACTIONS) {
 
     } catch (error) {
         console.error('An error occurred reading cached token data:', error);
+        process.exit(1);
+    }
+} else if (process.env.GITHUB_ACTIONS) {
+    try {
+        console.log('Running in GitHub Actions environment...');
+        tokenData = await refreshAccessToken(process.env.REFRESH_TOKEN)
+        accessToken = tokenData.access_token;
+
+        fs.writeFileSync('.spotify_token.json', JSON.stringify(tokenData, null, 2));
+    } catch (error) {
+        console.error('An error occurred while refreshing the access token:', error);
         process.exit(1);
     }
 } else {
@@ -84,5 +86,13 @@ if (options.isUsingExisting) {
     await replacePlaylistItems(accessToken, playlistId, trackUris);
 } else {
     await addToUserPlaylist(accessToken, playlistId, trackUris);
+}
+
+if (process.env.GITHUB_ACTIONS) {
+    try {
+        fs.unlinkSync('.spotify_token.json');
+    } catch (error) {
+        console.warn('An error occurred while deleting the cached token file:', error);
+    }
 }
 console.log('🚀 Script run successfully!');
