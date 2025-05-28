@@ -29,8 +29,11 @@ if (process.env.GITHUB_ACTIONS) {
         const cachedTokenData = JSON.parse(tokenJson);
 
         console.log('Using cached token data...');
-        tokenData = cachedTokenData;
-        accessToken = tokenData.access_token
+        const refreshToken = cachedTokenData.refresh_token
+
+        tokenData = await refreshAccessToken(refreshToken);
+        accessToken = tokenData.access_token;
+
     } catch (error) {
         console.error('An error occurred reading cached token data:', error);
         process.exit(1);
