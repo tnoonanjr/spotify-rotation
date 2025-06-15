@@ -11,12 +11,10 @@ A CLI tool to create and update a Spotify playlist of your favorite songs.
    - Click "Create An App"
    - Fill in the app name (e.g., "Spotify Rotation") and description
    - Add `http://127.0.0.1:4242/callback` as a Redirect URI (or change the PORT var. to fit your custom URI)
-   - Copy your **Client ID**
+   - Copy your **Client ID** and **Client Secret**
 
-2. **Configuration**
-   - If you don't have Node.js already, install it (reference Prerequisites above)
-   
-   ### For local development:
+2. **Configuration** 
+   ### For local deployment:
    - Clone the repository
    - Replace the default Client ID with yours:
      ```javascript
@@ -24,6 +22,20 @@ A CLI tool to create and update a Spotify playlist of your favorite songs.
      const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || 'your-client-id';
      const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_ID || 'your-client-secret';
      ```
+
+   ### GitHub workflow for automatic updates:
+   - Fork the repository
+   - Create your own GitHub repository secrets in Settings → Secrets and Variables → Actions:
+     - `SPOTIFY_CLIENT_ID`: Your Spotify app client ID
+     - `SPOTIFY_CLIENT_SECRET`: Your Spotify app client secret
+     - `SPOTIFY_REFRESH_TOKEN`: A refresh token for your account (see below)
+   - The workflow will _automagically_ run every Friday at midnight UTC!
+   - You can also trigger it manually from the Actions tab
+
+   #### Generating a refresh token:
+   - Run the script locally first: `npm start -- -n "My Playlist" -l 30 -t short`
+   - This will create a `.spotify_token.json` file containing a refresh token
+   - Use this refresh token value for your GitHub secret
 
 ## Usage:
 ```bash
