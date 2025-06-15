@@ -29,9 +29,9 @@ if (fs.existsSync('.spotify_token.json')) {
         console.error('An error occurred reading cached token data:', error);
         process.exit(1);
     }
-} else if (process.env.REFRESH_TOKEN) {
-    console.log('Using environment variable REFRESH_TOKEN to refresh access token...');
-    tokenData = await refreshAccessToken(process.env.REFRESH_TOKEN);
+} else if (process.env.SPOTIFY_REFRESH_TOKEN) {
+    console.log('Using environment variables to refresh access token...');
+    tokenData = await refreshAccessToken(process.env.SPOTIFY_REFRESH_TOKEN);
     accessToken = tokenData.access_token;
 } else {
     console.log('Starting authentication server...');

@@ -1,8 +1,8 @@
 import { URL } from 'url';
 import { randomBytes } from 'crypto';
 
-const CLIENT_ID = process.env.CLIENT_SECRET || 'your-client-id';
-const CLIENT_SECRET = process.env.CLIENT_SECRET  || 'your-client-secret';
+const CLIENT_ID = process.env.SPOTIFY_CLIENT_SECRET || 'your-client-id';
+const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET  || 'your-client-secret';
 const scope = `user-read-private user-read-email playlist-read-private playlist-modify-public 
                playlist-modify-private user-top-read`;
           
