@@ -5,6 +5,9 @@ export async function getUserProfile(accessToken) {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${accessToken}` }
     });
+    if (!response.ok) {
+        throw new Error(`Error ${response.status} fetching user profile: ${response.statusText}`);
+    }
     return await response.json();
 }
 
@@ -13,6 +16,9 @@ export async function getUserPlaylists(accessToken, userId) {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${accessToken}` }
     });
+    if (!response.ok) {
+        throw new Error(`Error ${response.status} fetching user profile: ${response.statusText}`);
+    }
     return await response.json();
 }
 
@@ -26,6 +32,9 @@ export async function postUserPlaylist(accessToken, userId, playlistName,
             description: playlistDescription,
         })
     });
+    if (!response.ok) {
+        throw new Error(`Error ${response.status} fetching user profile: ${response.statusText}`);
+    }
     return await response.json();
 }
 
@@ -35,6 +44,9 @@ export async function addToUserPlaylist(accessToken, playlistId, trackUris) {
         headers: { 'Authorization': `Bearer ${accessToken}` },
         body: JSON.stringify({ uris: trackUris })
     });
+    if (!response.ok) {
+        throw new Error(`Error ${response.status} fetching user profile: ${response.statusText}`);
+    }
     return await response.json();
 }
 
@@ -47,6 +59,9 @@ export async function replacePlaylistItems(accessToken, playlistId, trackUris) {
         },
         body: JSON.stringify({ uris: trackUris })
     });
+    if (!response.ok) {
+        throw new Error(`Error ${response.status} fetching user profile: ${response.statusText}`);
+    }
     return await response.json();
 }
 
@@ -59,5 +74,8 @@ export async function getUserTopTracks(accessToken, timeRange, limit) {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${accessToken}` }
     });
+    if (!response.ok) {
+        throw new Error(`Error ${response.status} fetching user profile: ${response.statusText}`);
+    }
     return await response.json();
 }
