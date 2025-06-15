@@ -92,7 +92,7 @@ Options:
         playlistName = 'Rotation Playlist';
     }
     if (!args.includes('-d')) {
-        playlistDescription = 'scripted | javascript | created by tnoonanjr'; 
+        playlistDescription = 'scripted | javascript | created by tnoonanjr | https://github.com/tnoonanjr/spotify-rotation'; 
     }
 
     return {
