@@ -1,26 +1,21 @@
 import { URL } from 'url';
-import { randomBytes, createHash } from 'crypto';
+import { randomBytes } from 'crypto';
 
-const CLIENT_ID = 'your-client-id';
+const CLIENT_ID = process.env.CLIENT_SECRET || 'your-client-id';
+const CLIENT_SECRET = process.env.CLIENT_SECRET  || 'your-client-secret';
 const scope = `user-read-private user-read-email playlist-read-private playlist-modify-public 
                playlist-modify-private user-top-read`;
-
+          
 export function generateCodeVerifier() {
     return randomBytes(64).toString('base64url');
 }
 
-export function generateCodeChallenge(codeVerifier) {
-    return createHash('sha256').update(codeVerifier).digest('base64url');
-}
-
-export function getAuthUrl(codeChallenge, state, redirectUri) {
+export function getAuthUrl(state, redirectUri) {
     const authUrl = new URL('https://accounts.spotify.com/authorize');
     authUrl.searchParams.append('client_id', CLIENT_ID);
     authUrl.searchParams.append('response_type', 'code');
     authUrl.searchParams.append('redirect_uri', redirectUri);
     authUrl.searchParams.append('scope', scope);
-    authUrl.searchParams.append('code_challenge_method', 'S256');
-    authUrl.searchParams.append('code_challenge', codeChallenge);
     if (state) authUrl.searchParams.append('state', state);
     return authUrl.toString();
 }
@@ -35,7 +30,10 @@ export async function exchangeCodeForToken(code, codeVerifier, redirectUri) {
 
     const response = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: { 
+            'Authorization' : `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+            'Content-Type': 'application/x-www-form-urlencoded' 
+        },
         body
     });
 
@@ -56,12 +54,15 @@ export async function refreshAccessToken(refreshToken) {
 
     const response = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: { 
+            'Authorization' : `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
         body
     });
 
     if (!response.ok) {
-        throw new Error(`Failed to refresh access token: ${response.status} ${response.statusText} - ${errorDetails}`);
+        throw new Error(`Failed to refresh access token: ${response.status} ${response.statusText}`);
     }
     return await response.json();
 }

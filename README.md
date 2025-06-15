@@ -22,21 +22,8 @@ A CLI tool to create and update a Spotify playlist of your favorite songs.
      ```javascript
      // Find this line and replace 'your-client-id'
      const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || 'your-client-id';
+     const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_ID || 'your-client-secret';
      ```
-   
-   ### For GitHub deployment:
-   1. Fork this repository
-   2. Go to your fork's Settings > Secrets and variables > Actions
-   3. Enable GitHub Actions in your repository
-   4. Get a refresh token by running the app locally once
-   5. Find the refresh token in the `.spotify_token.json` file that's created
-   6. Add two secrets to your GitHub repository:
-    - `SPOTIFY_CLIENT_ID`: Your Spotify application client ID
-    - `SPOTIFY_REFRESH_TOKEN`: The refresh token from the file
-   7. The workflow will:
-    - Use the refresh token to get a new access token
-    - Create/update your playlist on the scheduled time
-
 
 ## Usage:
 ```bash

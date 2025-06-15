@@ -1,15 +1,14 @@
-import { exchangeCodeForToken, generateCodeVerifier, generateCodeChallenge, getAuthUrl } from './auth.js';
+import { exchangeCodeForToken, generateCodeVerifier, getAuthUrl } from './auth.js';
 import fs from 'fs';
 
 export async function rootHandler(response, codeVerifiers, REDIRECT_URI) {
     
     const codeVerifier = generateCodeVerifier();
-    const codeChallenge = generateCodeChallenge(codeVerifier);
 
     const state = Math.random().toString(36).substring(2, 15);
     codeVerifiers[state] = codeVerifier;
     
-    const authUrl = getAuthUrl(codeChallenge, state, REDIRECT_URI);
+    const authUrl = getAuthUrl(state, REDIRECT_URI);
     response.writeHead(302, { 'Location': authUrl });
     response.end();
 }
