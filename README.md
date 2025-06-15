@@ -33,7 +33,7 @@ A CLI tool to create and update a Spotify playlist of your favorite songs.
    - You can also trigger it manually from the Actions tab
 
    #### Generating a refresh token:
-   - Run the script locally first: `npm start -- -n "My Playlist" -l 30 -t short`
+   - Run the script locally first
    - This will create a `.spotify_token.json` file containing a refresh token
    - Use this refresh token value for your GitHub secret
 
