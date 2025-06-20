@@ -29,7 +29,7 @@ A CLI tool to create and update a Spotify playlist of your favorite songs.
      - `SPOTIFY_CLIENT_ID`: Your Spotify app client ID
      - `SPOTIFY_CLIENT_SECRET`: Your Spotify app client secret
      - `SPOTIFY_REFRESH_TOKEN`: A refresh token for your account (see below)
-   - The workflow will _automagically_ run every Friday at midnight UTC!
+   - The workflow will _automagically_ run every Friday at midnight UTC-5 (New York) time!
    - You can also trigger it manually from the Actions tab
 
    #### Generating a refresh token:

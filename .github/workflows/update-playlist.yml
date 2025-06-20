@@ -4,6 +4,7 @@ on:
   workflow_dispatch:      # Allow manual triggering
   schedule:
     - cron: '0 0 * * 5'   # Weekly at midnight on Friday
+      timezone: 'America/New_York'
 
 jobs:
   create-playlist:
