@@ -18,7 +18,7 @@ A CLI tool to create and update a Spotify playlist of your favorite songs.
    - Clone the repository
    - Replace the default Client ID with yours:
      ```javascript
-     // Find this line and replace 'your-client-id'
+     // Find this line and replace 'your-client-id' and 'your-client-secret'
      const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || 'your-client-id';
      const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_ID || 'your-client-secret';
      ```
